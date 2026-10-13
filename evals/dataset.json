@@ -1,0 +1,36 @@
+[
+  {
+    "id": "site_01",
+    "name": "Thin Content & Missing Meta Page",
+    "fixture": "site_01_thin_content.html",
+    "target_url": "https://example.com/site01",
+    "expected_findings": [
+      "CHECK-TITLE-02",
+      "CHECK-META-01",
+      "CHECK-ALT-01",
+      "CHECK-CANONICAL-01",
+      "CHECK-SCHEMA-01",
+      "CHECK-THIN-CONTENT",
+      "CHECK-HEADING-H2"
+    ]
+  },
+  {
+    "id": "site_02",
+    "name": "E-commerce Product Page (Missing Schema & Thin Content)",
+    "fixture": "site_02_ecommerce_missing_schema.html",
+    "target_url": "https://example.com/site02",
+    "expected_findings": [
+      "CHECK-H1-02",
+      "CHECK-CANONICAL-01",
+      "CHECK-SCHEMA-01",
+      "CHECK-THIN-CONTENT"
+    ]
+  },
+  {
+    "id": "site_03",
+    "name": "Perfect AEO Article",
+    "fixture": "site_03_perfect_aeo_article.html",
+    "target_url": "https://example.com/site03",
+    "expected_findings": []
+  }
+]

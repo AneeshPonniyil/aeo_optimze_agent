@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenvora AI - Website & AEO Audit Copilot</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+    <!-- Header Navbar -->
+    <header class="navbar">
+        <div class="brand">
+            <div class="brand-icon">Z</div>
+            <span class="brand-title">Zenvora AI Copilot</span>
+        </div>
+        <div class="nav-actions">
+            <span id="providerBadge" class="badge-provider">Provider: MOCK</span>
+            <button id="historyBtn" class="btn-secondary">Audit History</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+        
+        <!-- Hero & Form -->
+        <section class="hero">
+            <h1>AI Website & Answer Engine Optimization Audit</h1>
+            <p>Uncover technical website issues and generate grounded, evidence-backed AEO content recommendations for generative search platforms.</p>
+        </section>
+
+        <div class="audit-form-card">
+            <form id="auditForm">
+                <div class="input-group">
+                    <input type="text" id="urlInput" class="input-url" placeholder="Enter target website URL (e.g. https://example.com)" required>
+                    <button type="submit" class="btn-primary">Audit Website</button>
+                </div>
+                <div id="formFeedback" class="form-feedback"></div>
+            </form>
+        </div>
+
+        <!-- Loader Overlay -->
+        <div id="loaderCard" class="loader-card">
+            <div class="spinner"></div>
+            <h3>Auditing Website & Running AEO Copilot...</h3>
+            <p class="text-muted" style="margin-top: 0.5rem;">Checking SSRF safety, respecting robots.txt, parsing HTML, and synthesizing AI recommendations.</p>
+        </div>
+
+        <!-- Results Dashboard -->
+        <section id="resultsSection" class="results-section">
+            
+            <!-- Audited Target Banner -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.5rem; background: var(--bg-card); padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid var(--border-color);">
+                <div>
+                    <span class="text-muted" style="font-size: 0.85rem;">AUDITED TARGET</span>
+                    <h2 id="auditedUrlDisplay" style="font-size: 1.25rem;">https://example.com</h2>
+                </div>
+                <div style="display:flex; gap: 1rem; align-items:center;">
+                    <span class="text-muted">Fetch Time: <strong id="fetchTimeDisplay" style="color:var(--text-main);">0.45s</strong></span>
+                    <button id="exportJsonBtn" class="btn-secondary" style="font-size:0.85rem;">Export JSON Report</button>
+                </div>
+            </div>
+
+            <!-- Score Gauges -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div id="techScore" class="score-circle">--</div>
+                    <div class="metric-info">
+                        <h3>Technical Health</h3>
+                        <p>Deterministic SEO & HTML check score out of 100.</p>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div id="entityScore" class="score-circle score-gold">--</div>
+                    <div class="metric-info">
+                        <h3>Entity Clarity</h3>
+                        <p>AI engine ability to uniquely identify target entity.</p>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div id="answerScore" class="score-circle">--</div>
+                    <div class="metric-info">
+                        <h3>Answer Readiness</h3>
+                        <p>Content structure optimization for Q&A extraction.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Findings Tabbed Section -->
+            <div class="tab-bar">
+                <button class="tab-btn active" data-tab="aeo">AEO Recommendations</button>
+                <button class="tab-btn" data-tab="technical">Technical Findings</button>
+            </div>
+
+            <div id="tabAeo">
+                <!-- Populated dynamically by app.js -->
+            </div>
+
+            <div id="tabTechnical" style="display:none;">
+                <!-- Populated dynamically by app.js -->
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- History Drawer Overlay -->
+    <div id="drawerOverlay" class="drawer-overlay"></div>
+
+    <!-- History Slide-Over Drawer -->
+    <aside id="drawer" class="drawer">
+        <div class="drawer-header">
+            <h3>Audit History</h3>
+            <button id="closeDrawerBtn" class="btn-secondary" style="padding:0.25rem 0.6rem;">&times;</button>
+        </div>
+        <div id="historyList" class="drawer-list">
+            <!-- Populated dynamically by app.js -->
+        </div>
+    </aside>
+
+    <footer>
+        <p>&copy; 2026 Zenvora AI Website & AEO Audit Copilot. Built with FastAPI & Vanilla JS.</p>
+    </footer>
+
+    <script type="module" src="/static/js/app.js"></script>
+</body>
+</html>
