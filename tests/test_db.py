@@ -4,6 +4,7 @@ from httpx import Response
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from app.db.database import Base
 from app.db.repository import AuditRepository
+from app.config import settings
 
 
 @pytest.fixture
@@ -93,7 +94,8 @@ async def test_audit_api_integration(async_client):
         # 1. Trigger Audit via POST API
         response = await async_client.post(
             "/api/v1/audits",
-            json={"url": "https://example.com/test-audit"}
+            json={"url": "https://example.com/test-audit"},
+            headers={"X-API-Key": settings.AUDIT_API_KEY},
         )
         assert response.status_code == 201
         data = response.json()
@@ -113,5 +115,8 @@ async def test_audit_api_integration(async_client):
         assert hist_data["total"] >= 1
 
         # 4. Delete Audit via DELETE API
-        del_resp = await async_client.delete(f"/api/v1/audits/{audit_id}")
+        del_resp = await async_client.delete(
+            f"/api/v1/audits/{audit_id}",
+            headers={"X-API-Key": settings.AUDIT_API_KEY},
+        )
         assert del_resp.status_code == 204

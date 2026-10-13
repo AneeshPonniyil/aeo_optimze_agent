@@ -25,7 +25,10 @@ export async function validateUrl(url) {
 export async function runAudit(url) {
   const response = await fetch(`${API_BASE}/audits`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-Key': 'dev-audit-api-key',
+    },
     body: JSON.stringify({ url }),
   });
   const data = await response.json();
@@ -48,7 +51,12 @@ export async function listAuditHistory() {
 }
 
 export async function deleteAudit(id) {
-  const response = await fetch(`${API_BASE}/audits/${id}`, { method: 'DELETE' });
+  const response = await fetch(`${API_BASE}/audits/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'X-API-Key': 'dev-audit-api-key',
+    },
+  });
   if (!response.ok) throw new Error('Failed to delete audit');
   return true;
 }

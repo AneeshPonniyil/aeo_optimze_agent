@@ -12,11 +12,20 @@
       "CHECK-SCHEMA-01",
       "CHECK-THIN-CONTENT",
       "CHECK-HEADING-H2"
-    ]
+    ],
+    "rationales": {
+      "CHECK-TITLE-02": "Title 'Thin Content Page' is 17 characters, which is below the 30-character minimum.",
+      "CHECK-META-01": "No <meta name='description'> tag exists in the HTML document head.",
+      "CHECK-ALT-01": "Image '/image.png' is missing the alt attribute entirely.",
+      "CHECK-CANONICAL-01": "No <link rel='canonical'> tag exists in the HTML document head.",
+      "CHECK-SCHEMA-01": "No JSON-LD structured data script blocks are present on the page.",
+      "CHECK-THIN-CONTENT": "Extracted word count is ~10 words, far below the 300-word threshold.",
+      "CHECK-HEADING-H2": "The page contains zero <h2> section headings."
+    }
   },
   {
     "id": "site_02",
-    "name": "E-commerce Product Page (Missing Schema & Thin Content)",
+    "name": "E-commerce Product Page (Multiple H1, Missing Canonical & Schema, Thin Content)",
     "fixture": "site_02_ecommerce_missing_schema.html",
     "target_url": "https://example.com/site02",
     "expected_findings": [
@@ -24,13 +33,100 @@
       "CHECK-CANONICAL-01",
       "CHECK-SCHEMA-01",
       "CHECK-THIN-CONTENT"
-    ]
+    ],
+    "rationales": {
+      "CHECK-H1-02": "The page contains 2 <h1> headings ('Wireless Headphones Pro' and 'Special Discount Offer').",
+      "CHECK-CANONICAL-01": "No <link rel='canonical'> tag exists in the HTML document head.",
+      "CHECK-SCHEMA-01": "No JSON-LD structured data script blocks are present on the page.",
+      "CHECK-THIN-CONTENT": "Authentic product description copy contains ~85 words, below the 300-word threshold."
+    }
   },
   {
     "id": "site_03",
-    "name": "Perfect AEO Article",
+    "name": "Perfect AEO Article (Clean Reference)",
     "fixture": "site_03_perfect_aeo_article.html",
     "target_url": "https://example.com/site03",
-    "expected_findings": []
+    "expected_findings": [],
+    "rationales": {
+      "CLEAN_PASS": "Document satisfies all 10 technical categories: title (57 chars), meta description (150 chars), single H1, valid H2s, image alt present, canonical present, FAQPage schema present, word count > 300, and no noindex."
+    }
+  },
+  {
+    "id": "site_04",
+    "name": "Critical Missing Tags (No Title, No H1, No Meta, Thin Content)",
+    "fixture": "site_04_missing_title_h1.html",
+    "target_url": "https://example.com/site04",
+    "expected_findings": [
+      "CHECK-TITLE-01",
+      "CHECK-META-01",
+      "CHECK-H1-01",
+      "CHECK-CANONICAL-01",
+      "CHECK-SCHEMA-01",
+      "CHECK-THIN-CONTENT",
+      "CHECK-HEADING-H2"
+    ],
+    "rationales": {
+      "CHECK-TITLE-01": "The HTML document head contains no <title> tag.",
+      "CHECK-META-01": "The HTML document head contains no <meta name='description'> tag.",
+      "CHECK-H1-01": "The document contains zero <h1> heading tags.",
+      "CHECK-CANONICAL-01": "The HTML document head contains no <link rel='canonical'> tag.",
+      "CHECK-SCHEMA-01": "No JSON-LD structured data script blocks are present.",
+      "CHECK-THIN-CONTENT": "Extracted word count is ~30 words, below the 300-word threshold.",
+      "CHECK-HEADING-H2": "The document contains zero <h2> section headings."
+    }
+  },
+  {
+    "id": "site_05",
+    "name": "Indexability Barrier (Robots 'noindex' & Missing Schema)",
+    "fixture": "site_05_noindex_restricted.html",
+    "target_url": "https://example.com/site05",
+    "expected_findings": [
+      "CHECK-ROBOTS-01",
+      "CHECK-SCHEMA-01"
+    ],
+    "rationales": {
+      "CHECK-ROBOTS-01": "The <meta name='robots' content='noindex, nofollow'> explicitly blocks search indexation.",
+      "CHECK-SCHEMA-01": "No JSON-LD structured data script blocks are present on the page."
+    }
+  },
+  {
+    "id": "site_06",
+    "name": "Sub-optimal Metadata Length Boundaries (Title Too Long, Meta Too Short)",
+    "fixture": "site_06_suboptimal_lengths.html",
+    "target_url": "https://example.com/site06",
+    "expected_findings": [
+      "CHECK-TITLE-02",
+      "CHECK-META-02",
+      "CHECK-SCHEMA-01"
+    ],
+    "rationales": {
+      "CHECK-TITLE-02": "Title length is 104 characters, exceeding the 60-character maximum.",
+      "CHECK-META-02": "Meta description length is 34 characters, falling below the 120-character minimum.",
+      "CHECK-SCHEMA-01": "No JSON-LD structured data script blocks are present on the page."
+    }
+  },
+  {
+    "id": "site_07",
+    "name": "Generic Schema Present (Lacks High-Value AEO Types & Missing Canonical)",
+    "fixture": "site_07_generic_schema.html",
+    "target_url": "https://example.com/site07",
+    "expected_findings": [
+      "CHECK-SCHEMA-02",
+      "CHECK-CANONICAL-01"
+    ],
+    "rationales": {
+      "CHECK-SCHEMA-02": "Page contains valid JSON-LD for 'BreadcrumbList', but lacks AEO-recommended types (FAQPage, Article, Organization, Product, HowTo).",
+      "CHECK-CANONICAL-01": "No <link rel='canonical'> tag exists in the HTML document head."
+    }
+  },
+  {
+    "id": "site_08",
+    "name": "Boundary Pass Reference (Zero Findings on Exact Thresholds)",
+    "fixture": "site_08_boundary_pass.html",
+    "target_url": "https://example.com/site08",
+    "expected_findings": [],
+    "rationales": {
+      "CLEAN_PASS": "All rules pass at valid thresholds: title (43 chars), meta description (156 chars), canonical present, single H1, multiple H2s, image alt present, Article schema present, word count > 300, and no noindex."
+    }
   }
 ]

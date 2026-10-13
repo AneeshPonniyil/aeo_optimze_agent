@@ -12,13 +12,20 @@ from app.schemas.crawler import PageMetadata
 from app.core.security import SSRFSecurityValidator, URLValidationError
 from app.core.crawler import AsyncWebCrawler, CrawlerError
 from app.core.analyzer import HTMLParserService, DeterministicTechnicalAnalyzer
+from app.core.auth import verify_audit_api_key
+from app.core.rate_limiter import check_audit_rate_limit
 
 logger = logging.getLogger("zenvora.api.audit")
 router = APIRouter()
 
 
 @router.post("/audits", response_model=AuditResponse, status_code=status.HTTP_201_CREATED, summary="Create and Execute Website Audit")
-async def create_audit(payload: AuditCreateRequest, db: AsyncSession = Depends(get_db)):
+async def create_audit(
+    payload: AuditCreateRequest,
+    db: AsyncSession = Depends(get_db),
+    _auth: str = Depends(verify_audit_api_key),
+    _rate: None = Depends(check_audit_rate_limit),
+):
     """
     Validate URL safety, fetch page content, perform deterministic technical & AEO analysis, and store results.
     """
@@ -133,7 +140,11 @@ async def get_audit(audit_id: str, db: AsyncSession = Depends(get_db)):
 
 
 @router.delete("/audits/{audit_id}", status_code=status.HTTP_204_NO_CONTENT, summary="Delete Audit Record")
-async def delete_audit(audit_id: str, db: AsyncSession = Depends(get_db)):
+async def delete_audit(
+    audit_id: str,
+    db: AsyncSession = Depends(get_db),
+    _auth: str = Depends(verify_audit_api_key),
+):
     deleted = await AuditRepository.delete_audit(db, audit_id)
     if not deleted:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Audit '{audit_id}' not found.")
